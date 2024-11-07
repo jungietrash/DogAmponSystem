@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawPanion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #e3f2fd;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ff7043;
+            padding: 20px;
+            color: #fff;
+            top: 0;
+            width: 98%;
+            z-index: 1000;
+        }
+
+        .header-logo img {
+            height: 50px;
+            border-radius: 12px;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover {
+            color: #ffe0b2;
+        }
+
+        .header-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-profile img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ff7043;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: #fff;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ff8a65;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            margin-top: 100px;
+            padding: 40px 20px;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Home Section */
+        #home {
+            text-align: center;
+        }
+
+        #home .welcome-section {
+            background-color: #ffe0b2;
+            width: 70%;
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        #home h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: #ff7043;
+            font-size: 3em;
+        }
+
+        #home .find-your-match {
+            margin: 30px 0;
+        }
+
+        #home .find-your-match button {
+            background-color: #ff7043;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #home .find-your-match button:hover {
+            background-color: #ff8a65;
+        }
+
+        /* Featured Pets Section */
+        .featured-pets {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .featured-pet-card {
+            background: #fff;
+            padding: 10px;
+            border-radius: 14px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            text-align: start;
+            transition: transform 0.3s;
+            font-family: Arial, sans-serif;
+        }
+
+        .featured-pet-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .featured-pet-card img {
+            width: 100%;
+            height: 160px; /* Fixed height for uniformity */
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .pet-info {
+            padding: 10px;
+        }
+
+        .pet-info h3 {
+            margin: 0 0 8px;
+            font-size: 1.25em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pet-info h3 i {
+            color: #007bff;
+        }
+
+        .pet-info p {
+            margin: 0 0 4px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .pet-info p i {
+            margin-right: 4px;
+        }
+
+        .pet-info p .fa-weight-scale {
+            color: #666;
+        }
+
+        .pet-info p .fa-map-marker-alt {
+            color: #ff5a5f;
+        }
+
+        .pet-info p .fa-dog {
+            color: #ff9900;
+        }
+        /* Adoption Process Section */
+        .adoption-process {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .adoption-process h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: #ff7043;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .adoption-steps {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: center;
+            justify-items: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* @media (max-width: 767px) {
+         .adoption-steps {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            justify-content: center;
+            justify-items: center;
+            align-items: center;
+            gap: 20px;
+            
+        }
+    } */
+
+        .step {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 150px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+        }
+
+        .step h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: #ff7043;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        /* Animal Care Section */
+        #animal-care {
+            text-align: center;
+            background: url('pawprint-bg.png') no-repeat center center fixed, #e3f2fd;
+            background-size: contain;
+        }
+
+        #animal-care h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: #ff7043;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        #animal-care h1::after {
+            content: "🐶";
+            font-size: 1.5em;
+            position: absolute;
+            right: -30px;
+            top: 10px;
+        }
+
+        #animal-care .tip {
+            background: #ffffff;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            max-width: 800px;
+            text-align: left;
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        #animal-care .tip:hover {
+            transform: translateY(-5px);
+        }
+
+        #animal-care .tip-header {
+            background-color: #ff7043;
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        #animal-care .tip-header i {
+            font-size: 1.2em;
+        }
+
+        #animal-care .tip-content {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #animal-care .tip-content img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin-right: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #animal-care .tip-text {
+            flex-grow: 1;
+        }
+
+        #animal-care .tip-text h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: #ff7043;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        #animal-care .tip-text p {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #ff7043;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+            width: 98%;
+        }
+
+        @media (max-width: 767px) {
+        .header-name {
+            display: none;
+        }
+    }
+
+    .responsive-iframe {
+        width: 800px; /* Set a fixed width for larger screens */
+        height: 450px;
+        border: none;
+    }
+
+    /* Responsive iframe for mobile screens */
+    @media (max-width: 768px) {
+        .responsive-iframe {
+            width: 100%; /* Full width on smaller screens */
+            height: auto; /* Adjust height to maintain aspect ratio */
+            aspect-ratio: 16/9; /* Optional: keeps a 16:9 ratio */
+        }
+    }
+
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Show the home section by default
+            document.getElementById("home").classList.add("active");
+
+            // Add click event listeners to navigation links
+            const navLinks = document.querySelectorAll(".header-nav a");
+            navLinks.forEach(link => {
+                link.addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    // Hide all sections
+                    document.querySelectorAll(".section").forEach(section => {
+                        section.classList.remove("active");
+                    });
+
+                    // Show the selected section
+                    const targetId = this.getAttribute("href").replace("#", "");
+                    document.getElementById(targetId).classList.add("active");
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-logo">
+            <img src="images/dog1.jpg" alt="Logo">
+        </div>
+        <nav class="header-nav">
+            <a href="#home"><span class="header-name">Home</span> <i class="fa-home fas"></i></a>
+            <a href="#animals"><span class="header-name">Animals</span> <i class="fa-paw fas"></i></a>
+            <a href="#find-your-match"><span class="header-name">Find Your Match</span> <i class="fa-heart fas"></i></a>
+            <a href="#animal-care"><span class="header-name">Animal Care</span> <i class="fa-heartbeat fas"></i></a>
+            <a href="#events"><span class="header-name">Events</span> <i class="fa-calendar-alt fas"></i></a>
+            <a href="#donate"><span class="header-name">Donate</span> <i class="fa-hand-holding-heart fas"></i></a>
+            <div class="dropdown">
+                <a href="#about"><span class="header-name">About</span> <i class="fa-info-circle fas"></i></a>
+                <div class="dropdown-content">
+                    <a href="#partner-shelters">Partner Shelters</a>
+                    <a href="#adoption-process">Adoption Process</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+        </nav>
+        <div class="header-profile">
+            <span class="header-name">Hi, Adopter Hannah</span>
+            <img src="images/user1.png" alt="User Profile">
+        </div>
+    </header>
+
+    <!-- Home Section -->
+    <section class="section" id="home" >
+        <div class="welcome-section" style="margin-inline: auto;">
+            <h1>Welcome to PawPanion</h1>
+            <p>Discover your perfect pet companion. Click through the tabs above to learn more!</p>
+            <div class="find-your-match">
+                <button style="border-radius: 10px;">Find Yours Now</button>
+            </div>
+        </div>
+        <!-- Featured Pets -->
+        <div class="featured-pets">
+            <div class="featured-pet-card">
+                <img src="images/dog1.jpg" alt="Simba">
+                <div class="pet-info">
+                    <h3>Simba <i class="fa-mars fa-solid"></i></h3>
+                    <p>2 years - Golden Retriever</p>
+                    <p><i class="fa-solid fa-weight-scale"></i> 40 lbs</p>
+                    <p><i class="fa-map-marker-alt fas"></i> Location: New York</p>
+                    <p>Golden Retriever - Golden</p>
+                    <p><i class="fa-dog fa-solid"></i> Friendly, Playful, Affectionate</p>
+                </div>
+            </div>
+            
+            <div class="featured-pet-card">
+                <img src="images/dog1.jpg" alt="Diego">
+                <div class="pet-info">
+                    <h3>Diego</h3>
+                    <p>Male, 1 year, French Bulldog</p>
+                    <p><i class="fa-solid fa-weight-scale"></i> 30 lbs</p>
+                    <p><i class="fa-map-marker-alt fas"></i> Location: Los Angeles</p>
+                    <p>French Bulldog - Color: Brindle</p>
+                    <p><i class="fa-smile fas"></i> Gentle, Curious, Adaptable</p>
+                </div>
+            </div>
+            
+            <div class="featured-pet-card">
+                <img src="images/dog1.jpg" alt="Lexie">
+                <div class="pet-info">
+                    <h3>Lexie</h3>
+                    <p>Female, 3 years, Labrador Mix</p>
+                    <p><i class="fa-solid fa-weight-scale"></i> 50 lbs</p>
+                    <p><i class="fa-map-marker-alt fas"></i> Location: Chicago</p>
+                    <p>Labrador Mix - Black</p>
+                    <p><i class="fa-smile fas"></i> Intelligent, Loyal, Energetic</p>
+                </div>
+            </div>
+        </div>            
+        <!-- Adoption Process -->
+        <div class="adoption-process">
+            <h2>Adoption Process</h2>
+            <div class="adoption-steps">
+                <div class="step">
+                    <h3>Step 1: Browse</h3>
+                    <p>Find your ideal pet among the many that need a home.</p>
+                </div>
+                <div class="step">
+                    <h3>Step 2: Apply</h3>
+                    <p>Submit an adoption application to ensure a great match.</p>
+                </div>
+                <div class="step">
+                    <h3>Step 3: Visit</h3>
+                    <p>Meet the pet in person to bond and ensure compatibility.</p>
+                </div>
+                <div class="step">
+                    <h3>Step 4: Adopt</h3>
+                    <p>Take your new best friend home and start your journey together.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Adoption Video -->
+        <div class="adoption-video">
+            <h2>The Importance of Pet Adoption</h2>
+            <iframe class="responsive-iframe" src="https://www.youtube.com/embed/8ahLiNoBwxw" title="Pet Adoption Video" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <!-- Animals Section -->
+    <section class="section" id="animals">
+        <div class="animals-container">
+            <h2 style="text-align: center; color: #ff7043; font-family: 'Montserrat', sans-serif; margin-bottom: 20px;">Match Your Furever</h2>
+            <div class="animal-filter" style="text-align: center; margin-bottom: 20px;">
+                <input type="text" placeholder="Search Name" style="margin: 0 10px; padding: 10px;" />
+                <input type="text" placeholder="Shelter" style="margin: 0 10px; padding: 10px;" />
+                <input type="text" placeholder="Filter" style="margin: 0 10px; padding: 10px;" />
+            </div>
+            <div class="animal-list" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <div class="featured-pet-card">
+                    <img src="images/dog1.jpg" alt="Simba">
+                    <div class="pet-info">
+                        <h3>Simba <i class="fa-mars fa-solid"></i></h3>
+                        <p>2 years - Golden Retriever</p>
+                        <p><i class="fa-solid fa-weight-scale"></i> 40 lbs</p>
+                        <p><i class="fa-map-marker-alt fas"></i> Location: New York</p>
+                        <p>Golden Retriever - Golden</p>
+                        <p><i class="fa-dog fa-solid"></i> Friendly, Playful, Affectionate</p>
+                    </div>
+                </div>
+                
+                <div class="featured-pet-card">
+                    <img src="images/dog1.jpg" alt="Diego">
+                    <div class="pet-info">
+                        <h3>Diego</h3>
+                        <p>Male, 1 year, French Bulldog</p>
+                        <p><i class="fa-solid fa-weight-scale"></i> 30 lbs</p>
+                        <p><i class="fa-map-marker-alt fas"></i> Location: Los Angeles</p>
+                        <p>French Bulldog - Color: Brindle</p>
+                        <p><i class="fa-smile fas"></i> Gentle, Curious, Adaptable</p>
+                    </div>
+                </div>
+                
+                <div class="featured-pet-card">
+                    <img src="images/dog1.jpg" alt="Lexie">
+                    <div class="pet-info">
+                        <h3>Lexie</h3>
+                        <p>Female, 3 years, Labrador Mix</p>
+                        <p><i class="fa-solid fa-weight-scale"></i> 50 lbs</p>
+                        <p><i class="fa-map-marker-alt fas"></i> Location: Chicago</p>
+                        <p>Labrador Mix - Black</p>
+                        <p><i class="fa-smile fas"></i> Intelligent, Loyal, Energetic</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Animal Care Section -->
+    <section class="section" id="animal-care">
+        <h1>Animal Care Tips</h1>
+        <div class="tip">
+            <div class="tip-header">
+                <i class="fa-bone fas"></i>
+                Tip #1
+            </div>
+            <div class="tip-content" style="display: flex; flex-wrap: wrap;">
+                <img src="images/dog1.jpg" alt="Healthy Food for Pets" style="margin-inline: auto;">
+                <div class="tip-text">
+                    <h2>Feed Them Healthy and Nutritious Food</h2>
+                    <p>Pets, like humans, need food that is tailored to their individual nutritional requirements. Dog diets are made to satisfy the dietary needs of dogs, and cat foods are made to meet the nutritional needs of cats. Importantly, their nutritional requirements are entirely different. Puppies need different types of food and nutrition than older dogs. Special diets may be a necessity for pets with medical conditions.</p>
+                    <p>A lot of people tend to feed their pets under the table. However, this cannot be recommended for the health and benefit of your pet. Table scraps are usually not suitable for dogs and cats. Most of the things we consume, such as salt, garlic, and onions, are harmful to your pet's wellness and cause them to become ill or even die.</p>
+                    <p>Don't forget to feed your pets the required amount of food. Obesity can be caused by overfeeding the pet or giving him too many treats, which can lead to heart failure, kidney problems, and other health issues. To avoid these conditions, it is best to weigh the food when it comes to feeding the pets. Always double-check with the vet if you are unsure of your pet's dietary requirements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="section" id="events">
+        <div class="events-container" style="text-align: center;">
+            <h2 style="color: #ff7043; font-family: 'Montserrat', sans-serif; margin-bottom: 20px;">Shelter Events</h2>
+            <div class="event-list" style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+                <div class="event-card" style=" background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); width: 80%; text-align: left; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h3 style="color: #ff7043; font-family: 'Montserrat', sans-serif;">Dog Show</h3>
+                        <p>Posted by <a href="#" style="color: #6200ea;">Care For Paws Shelter Sanctuary</a> on 28 Sep, 2024 01:21 am</p>
+                        <p><strong>Location:</strong> Robinson's Place Cavite City</p>
+                        <p><strong>Event Capacity:</strong> 100</p>
+                        <p><strong>Event Status:</strong> Upcoming</p>
+                        <p><strong>From:</strong> 29 September, 2024 <br><strong>To:</strong> 30 September, 2024</p>
+                    </div>
+                    <div style="margin-inline: auto;">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3874.050697497938!2d120.94730251525423!3d14.28547129037388!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c93ae96b1b65%3A0x2d2c92d4ed77a31f!2sRobinsons%20Place%20Dasmari%C3%B1as!5e0!3m2!1sen!2sph!4v1686180031094!5m2!1sen!2sph" width="300" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Info Sections -->
+    <section class="section" id="partner-shelters">
+        <div class="info-block">
+            <h2>Partner Shelters</h2>
+            <p>We work with a variety of local shelters to help our pets find their forever homes. Visit one of our partners to meet your new companion.</p>
+        </div>
+    </section>
+    <section class="section" id="adoption-process">
+        <div class="info-block">
+            <h2>Adoption Process</h2>
+            <p>Our adoption process is easy and supportive, ensuring that you find the right match. Steps include applying, visiting the shelter, and taking your new friend home.</p>
+        </div>
+    </section>
+    <section class="section" id="contact">
+        <div class="info-block">
+            <h2>Contact</h2>
+            <p>If you have any questions, feel free to reach out. We're here to help you find your perfect pet.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        &copy; 2024 PawPanion. All rights reserved.
+    </footer>
+</body>
+
+</html>
